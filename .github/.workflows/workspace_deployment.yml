@@ -1,0 +1,30 @@
+name: workspace deployment
+
+on:
+    push:
+        branches: [workspace_publish]
+
+    workflow_dispatch:
+
+jobs:
+    release:
+        # You also can use the self-hosted runners.
+        runs-on: windows-latest
+        steps:
+        # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it.
+          - uses: actions/checkout@v2
+          - name: Synapse workspace deployment
+            uses: azure/synapse-workspace-deployment@release-1.0
+          with:
+            TargetWorkspaceName: 'uat--synapseworkspace'
+            TemplateFile: './mycicdsynapserepo/TemplateForWorkspace.json'
+            ParametersFile: './mycicdsynapserepo/TemplateParametersForWorkspace.json'
+            OverrideArmParameters: './path of the parameters.yaml'
+            environment: 'Azure Public'
+            resourceGroup: 'target workspace resource group'
+            clientId: ${{secrets.CLIENT_ID}}
+            clientSecret:  ${{secrets.CLIENT_SECRET}}
+            subscriptionId: ${{secrets.SUBSCRIPTION_ID}}
+            tenantId: ${{secrets.TENANT_ID}}
+            DeleteArtifactsNotInTemplate: 'true'
+            managedIdentity: 'False'
