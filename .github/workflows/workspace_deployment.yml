@@ -19,12 +19,10 @@ jobs:
                 TargetWorkspaceName: 'uat--synapseworkspace'
                 TemplateFile: './dev--synapseworkspace/TemplateForWorkspace.json'
                 ParametersFile: './dev--synapseworkspace/TemplateParametersForWorkspace.json'
-                OverrideArmParameters: './path of the parameters.yaml'
                 environment: 'Azure Public'
-                resourceGroup: 'target workspace resource group'
+                resourceGroup: 'di_msft_offshore_sandbox'
                 clientId: ${{secrets.CLIENT_ID}}
                 clientSecret:  ${{secrets.CLIENT_SECRET}}
                 subscriptionId: ${{secrets.SUBSCRIPTION_ID}}
                 tenantId: ${{secrets.TENANT_ID}}
-                DeleteArtifactsNotInTemplate: 'true'
-                managedIdentity: 'False'
+                DeleteArtifactsNotInTemplate: 'false'
