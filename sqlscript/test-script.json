@@ -2,7 +2,7 @@
 	"name": "test-script",
 	"properties": {
 		"content": {
-			"query": "",
+			"query": "select 1+1",
 			"metadata": {
 				"language": "sql"
 			},
