@@ -1,0 +1,10 @@
+{
+	"name": "synapse-ws-sql--dev--synapseworkspace",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/22fcd409-b8a1-4dae-b3d9-88eba57831b8/resourceGroups/di_msft_offshore_sandbox/providers/Microsoft.Synapse/workspaces/dev--synapseworkspace",
+		"groupId": "sql",
+		"fqdns": [
+			"dev--synapseworkspace.3554c065-152e-4b2f-9f5a-4f941153a39f.sql.azuresynapse.net"
+		]
+	}
+}
