@@ -17,8 +17,8 @@ jobs:
             uses: azure/synapse-workspace-deployment@release-1.0
             with:
               TargetWorkspaceName: 'uat--synapseworkspace'
-              TemplateFile: './mycicdsynapserepo/TemplateForWorkspace.json'
-              ParametersFile: './mycicdsynapserepo/TemplateParametersForWorkspace.json'
+              TemplateFile: './dev--synapseworkspace/TemplateForWorkspace.json'
+              ParametersFile: './dev--synapseworkspace/TemplateParametersForWorkspace.json'
               OverrideArmParameters: './path of the parameters.yaml'
               environment: 'Azure Public'
               resourceGroup: 'target workspace resource group'
