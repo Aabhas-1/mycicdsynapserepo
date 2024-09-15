@@ -8,13 +8,7 @@
 		"dev--synapseworkspace-WorkspaceDefaultSqlServer_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:dev--synapseworkspace.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
 		},
-		"dev-synapseworkspace-WorkspaceDefaultSqlServer_connectionString": {
-			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:dev-synapseworkspace.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
-		},
 		"dev--synapseworkspace-WorkspaceDefaultStorage_properties_typeProperties_url": {
-			"value": "https://devsynapsedefaultadls.dfs.core.windows.net"
-		},
-		"dev-synapseworkspace-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"value": "https://devsynapsedefaultadls.dfs.core.windows.net"
 		}
 	}
