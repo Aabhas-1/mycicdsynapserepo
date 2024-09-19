@@ -29,7 +29,16 @@ jobs:
           git merge workspace_publish --no-ff --allow-unrelated-histories
           git push origin main
 
-      # Step 3: Create a new release branch with the current date
+      # Step 3: Check if release branch exists and delete it if found
+      - name: Delete existing release branch if it exists
+        run: |
+          $date = Get-Date -Format "MM-dd-yyyy"
+          $release_branch_name = "release-$date"
+          if (git ls-remote --exit-code --heads origin $release_branch_name) {
+            git push origin --delete $release_branch_name
+          }
+
+      # Step 4: Create a new release branch with the current date
       - name: Create new release branch
         run: |
           $date = Get-Date -Format "MM-dd-yyyy"
