@@ -29,22 +29,6 @@ jobs:
           git merge development --no-ff --allow-unrelated-histories
           git push origin main
 
-      # Step 3: Check if release branch exists and delete it if found, handle error if branch not found
-      - name: Delete existing release branch if it exists
-        run: |
-          $date = Get-Date -Format "MM-dd-yyyy"
-          $release_branch_name = "release-$date"
-          try {
-            if (git ls-remote --exit-code --heads origin $release_branch_name) {
-              Write-Host "Branch $release_branch_name exists, deleting..."
-              git push origin --delete $release_branch_name
-            } else {
-              Write-Host "Branch $release_branch_name does not exist, continuing..."
-            }
-          } catch {
-            Write-Host "Error occurred while checking for branch $release_branch_name, but continuing..."
-          }
-        shell: pwsh
 
       # Step 4: Create a new release branch with the current date
       - name: Create new release branch
