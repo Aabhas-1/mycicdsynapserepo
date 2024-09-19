@@ -1,0 +1,65 @@
+name: Merge and Deploy Release to UAT Synapse
+
+on:
+  push:
+    branches:
+      - workspace_publish
+  workflow_dispatch:  # Manually triggered pipeline
+
+jobs:
+  merge-and-release:
+    runs-on: windows-latest
+
+    steps:
+      # Step 1: Checkout the workspace_publish branch and fetch all branches
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0  # Fetch all branches
+
+      - name: Fetch all branches
+        run: git fetch --all
+
+      # Step 2: Merge workspace_publish into main
+      - name: Merge workspace_publish to main
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout main
+          git merge workspace_publish --no-ff --allow-unrelated-histories
+          git push origin main
+
+      # Step 3: Create a new release branch with the current date
+      - name: Create new release branch
+        run: |
+          release_branch_name="release-$(date +'%m-%d-%Y')"
+          git checkout -b $release_branch_name
+          git push origin $release_branch_name
+
+  deploy-to-uat:
+    needs: merge-and-release  # This job depends on the successful completion of the previous job
+    runs-on: windows-latest
+
+    steps:
+      # Step 1: Checkout the newly created release branch
+      - name: Checkout release branch
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: release-$(date +'%m-%d-%Y')  # Checkout the newly created release branch
+
+      # Step 2: Deploy the release branch to UAT Synapse
+      - name: Synapse workspace deployment
+        uses: azure/synapse-workspace-deployment@release-1.0
+        with:
+          TargetWorkspaceName: 'uat--synapseworkspace'  # UAT Synapse workspace
+          TemplateFile: './dev--synapseworkspace/TemplateForWorkspace.json'
+          ParametersFile: './dev--synapseworkspace/TemplateParametersForWorkspace.json'
+          environment: 'Azure Public'
+          resourceGroup: 'di_msft_offshore_sandbox'
+          clientId: ${{ secrets.CLIENT_ID }}
+          clientSecret: ${{ secrets.CLIENT_SECRET }}
+          subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
+          tenantId: ${{ secrets.TENANT_ID }}
+          DeleteArtifactsNotInTemplate: 'false'
