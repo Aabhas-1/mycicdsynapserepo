@@ -1,0 +1,41 @@
+{
+	"name": "DS_metadata",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQL_Server",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "datasource_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "schema_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "entity_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "isActive",
+				"type": "bit"
+			},
+			{
+				"name": "server_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "database_name",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "",
+			"table": ""
+		}
+	}
+}
