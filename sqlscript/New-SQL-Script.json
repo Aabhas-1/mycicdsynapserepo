@@ -1,0 +1,17 @@
+{
+	"name": "New-SQL-Script",
+	"properties": {
+		"content": {
+			"query": "select 'Aabhas'",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
