@@ -11,28 +11,42 @@ jobs:
     runs-on: windows-latest  # Use Windows as the runner
 
     steps:
-      # Step 1: Checkout development branch
+      # Step 1: Checkout the development branch
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           ref: development
 
-      # Step 2: Merge development into main
+      # Step 2: Fetch all branches
+      - name: Fetch all branches
+        run: |
+          git fetch --all
+
+      # Step 3: Checkout the main branch
+      - name: Checkout main branch
+        run: |
+          git checkout main
+
+      # Step 4: Merge development into main
       - name: Merge development to main
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git checkout main
           git merge development --no-ff
+
+      # Step 5: Push changes to main branch
+      - name: Push changes to main branch
+        run: |
           git push origin main
 
-      # Step 3: Install Azure CLI on Windows
+      # Step 6: Install Azure CLI on Windows
       - name: Install Azure CLI
         run: |
           Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi
           Start-Process msiexec.exe -ArgumentList '/I AzureCLI.msi /quiet /norestart' -NoNewWindow -Wait
           az --version
 
-      # Step 4: Login to Azure using Service Principal
+
+      # Step 7: Login to Azure using Service Principal
       - name: Login to Azure
         run: az login --service-principal -u ${{ secrets.CLIENT_ID }} -p ${{ secrets.CLIENT_SECRET }} --tenant ${{ secrets.TENANT_ID }}
