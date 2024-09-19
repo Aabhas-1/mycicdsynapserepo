@@ -1,10 +1,8 @@
 name: Merge and Deploy Release to UAT Synapse
 
 on:
-  push:
-    branches:
-      - development  # Trigger on push to development branch
-
+  workflow_dispatch:
+  
 jobs:
   merge-and-release:
     runs-on: windows-latest
