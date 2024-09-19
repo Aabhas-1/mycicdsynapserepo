@@ -1,6 +1,9 @@
 name: Merge and Deploy Release to UAT Synapse
 
 on:
+  push:
+    branches:
+      - workspace_publish
   workflow_dispatch:  # Manually triggered pipeline
 
 jobs:
