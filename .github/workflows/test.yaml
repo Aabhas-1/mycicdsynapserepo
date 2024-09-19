@@ -1,0 +1,40 @@
+name: Rebase Development Branch
+
+# Trigger the workflow on any push to the 'backup_branch'
+on:
+  push:
+    branches:
+      - backup_branch  # Trigger when a commit is pushed to 'backup_branch'
+
+jobs:
+  rebase-development:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Fetch all branches, not just the default one
+
+      # Step 2: Set up Git
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      # Step 3: Check out the development branch
+      - name: Checkout development branch
+        run: |
+          git checkout development
+
+      # Step 4: Rebase the development branch onto the backup_branch
+      - name: Rebase development branch with backup_branch
+        run: |
+          git fetch origin backup_branch
+          git rebase origin/backup_branch
+
+      # Step 5: Push the rebased development branch back to GitHub
+      - name: Push changes to development branch
+        run: |
+          git push origin development --force
