@@ -4,7 +4,7 @@ name: Rebase Development Branch
 on:
   push:
     branches:
-      - backup_branch  # Trigger when a commit is pushed to 'backup_branch'
+      - Backup_branch  # Trigger when a commit is pushed to 'backup_branch'
 
 jobs:
   rebase-development:
@@ -29,10 +29,10 @@ jobs:
           git checkout development
 
       # Step 4: Rebase the development branch onto the backup_branch
-      - name: Rebase development branch with backup_branch
+      - name: Rebase development branch with Backup_branch
         run: |
-          git fetch origin backup_branch
-          git rebase origin/backup_branch
+          git fetch origin Backup_branch
+          git rebase origin/Backup_branch
 
       # Step 5: Push the rebased development branch back to GitHub
       - name: Push changes to development branch
