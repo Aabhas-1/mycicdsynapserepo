@@ -1,6 +1,6 @@
 name: Rebase Development Branch
 
-# Trigger the workflow on any push to the 'backup_branch'
+
 on:
   push:
     branches:
