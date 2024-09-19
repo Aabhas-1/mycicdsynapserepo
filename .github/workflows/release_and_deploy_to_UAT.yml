@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - workspace_publish
-  workflow_dispatch:  # Manually triggered pipeline
 
 jobs:
   merge-and-release:
@@ -39,16 +38,17 @@ jobs:
           git push origin $release_branch_name
 
   deploy-to-uat:
-    needs: merge-and-release  # This job depends on the successful completion of the previous job
+    needs: merge-and-release
     runs-on: windows-latest
 
     steps:
-      # Step 1: Checkout the newly created release branch
+      # Step 1: Checkout the newly created release branch (using PowerShell to resolve date)
       - name: Checkout release branch
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          ref: release-$(Get-Date -Format "MM-dd-yyyy")  # PowerShell date for the release branch
+        run: |
+          $date = Get-Date -Format "MM-dd-yyyy"
+          $release_branch_name = "release-$date"
+          git checkout $release_branch_name
+        shell: pwsh
 
       # Step 2: Deploy the release branch to UAT Synapse
       - name: Synapse workspace deployment
