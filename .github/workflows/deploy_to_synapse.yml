@@ -19,14 +19,14 @@ jobs:
       - name: Fetch all branches
         run: git fetch --all
 
-      # Step 2: Merge development into main, allowing unrelated histories
-      - name: Merge development to main
+      # Step 2: Merge development into master, allowing unrelated histories
+      - name: Merge development to master
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git checkout main
+          git checkout master
           git merge development --no-ff --allow-unrelated-histories
-          git push origin main
+          git push origin master
 
       # Step 3: Set up Azure CLI on Windows
       - name: Install Azure CLI
@@ -36,7 +36,6 @@ jobs:
           az --version
 
 
-
-      # Step 7: Login to Azure using Service Principal
+      # Step 4: Login to Azure using Service Principal
       - name: Login to Azure
         run: az login --service-principal -u ${{ secrets.CLIENT_ID }} -p ${{ secrets.CLIENT_SECRET }} --tenant ${{ secrets.TENANT_ID }}
