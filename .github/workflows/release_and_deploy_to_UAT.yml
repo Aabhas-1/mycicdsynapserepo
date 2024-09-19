@@ -33,7 +33,8 @@ jobs:
       # Step 3: Create a new release branch with the current date
       - name: Create new release branch
         run: |
-          release_branch_name="release-$(date +'%m-%d-%Y')"
+          $date = Get-Date -Format "MM-dd-yyyy"
+          $release_branch_name = "release-$date"
           git checkout -b $release_branch_name
           git push origin $release_branch_name
 
