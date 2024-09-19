@@ -35,8 +35,6 @@ jobs:
           Start-Process msiexec.exe -ArgumentList '/I AzureCLI.msi /quiet /norestart' -NoNewWindow -Wait
           az --version
 
-
-
       # Step 7: Login to Azure using Service Principal
       - name: Login to Azure
         run: az login --service-principal -u ${{ secrets.CLIENT_ID }} -p ${{ secrets.CLIENT_SECRET }} --tenant ${{ secrets.TENANT_ID }}
