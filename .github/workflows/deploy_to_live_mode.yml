@@ -20,7 +20,7 @@ jobs:
         uses: Azure/synapse-workspace-deployment@V1.9.0
         with:
           TargetWorkspaceName: 'dev--synapseworkspace'
-          ArtifactsFolder: './RootFolder'
+          ArtifactsFolder: './'
           environment: 'Azure Public'
           resourceGroup: 'di_msft_offshore_sandbox'
           clientId: ${{ secrets.CLIENT_ID }}
