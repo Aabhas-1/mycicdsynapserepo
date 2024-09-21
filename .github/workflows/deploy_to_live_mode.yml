@@ -1,7 +1,7 @@
 name: Synapse Deployment Workflow
 
 on:
-  pull_request:
+  push:
     branches:
       - development
 
@@ -37,8 +37,8 @@ jobs:
         with:
           TargetWorkspaceName: 'dev--synapseworkspace'
           ArtifactsFolder: './'  # Replace this with the correct folder path
-          TemplateFile: '.dev--synapseworkspace/TemplateForWorkspace.json'
-          ParametersFile: '.dev--synapseworkspace/TemplateParametersForWorkspace.json'
+          TemplateFile: './dev--synapseworkspace/TemplateForWorkspace.json'
+          ParametersFile: './dev--synapseworkspace/TemplateParametersForWorkspace.json'
           environment: 'Azure Public'
           resourceGroup: 'di_msft_offshore_sandbox'
           clientId: ${{ secrets.CLIENT_ID }}
