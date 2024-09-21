@@ -1,0 +1,48 @@
+name: Synapse Deployment Workflow
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  merge_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step to checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Ensure full branch history is available
+
+      # Merge development into workspace_publish
+      - name: Merge development into workspace_publish
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Checkout the workspace_publish branch
+          git checkout workspace_publish
+
+          # Merge the development branch into workspace_publish
+          git merge origin/development --no-ff --allow-unrelated-histories
+
+          # Push the changes to the workspace_publish branch
+          git push origin workspace_publish
+
+      # Synapse workspace deployment step using Azure/synapse-workspace-deployment
+      - name: Deploy Synapse workspace from workspace_publish branch
+        uses: Azure/synapse-workspace-deployment@V1.9.0
+        with:
+          TargetWorkspaceName: 'dev--synapseworkspace'
+          ArtifactsFolder: './'  # Replace this with the correct folder path
+          TemplateFile: 'dev--synapseworkspace/TemplateForWorkspace.json'
+          ParametersFile: 'dev--synapseworkspace/TemplateParametersForWorkspace.json'
+          environment: 'Azure Public'
+          resourceGroup: 'di_msft_offshore_sandbox'
+          clientId: ${{ secrets.CLIENT_ID }}
+          clientSecret: ${{ secrets.CLIENT_SECRET }}
+          subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
+          tenantId: ${{ secrets.TENANT_ID }}
+          operation: 'validateDeploy'
