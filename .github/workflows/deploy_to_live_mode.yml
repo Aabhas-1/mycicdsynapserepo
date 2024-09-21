@@ -26,7 +26,7 @@ jobs:
           git checkout workspace_publish
 
           # Merge the development branch into workspace_publish
-          git merge origin/development --no-ff
+          git merge origin/development --no-ff --allow-unrelated-histories
 
           # Push the changes to the workspace_publish branch
           git push origin workspace_publish
