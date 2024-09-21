@@ -1,0 +1,30 @@
+name: Synapse Deployment Workflow
+
+# Trigger the workflow when a pull request is raised on the development branch
+on:
+  pull_request:
+    branches:
+      - development
+
+jobs:
+  deploy_synapse:
+    runs-on: ubuntu-latest  # Use a Linux-based runner
+
+    steps:
+      # Step to checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Synapse workspace deployment step using Azure/synapse-workspace-deployment
+      - name: Deploy Synapse workspace
+        uses: Azure/synapse-workspace-deployment@V1.9.0
+        with:
+          TargetWorkspaceName: 'dev--synapseworkspace'
+          ArtifactsFolder: './RootFolder'
+          environment: 'Azure Public'
+          resourceGroup: 'di_msft_offshore_sandbox'
+          clientId: ${{ secrets.CLIENT_ID }}
+          clientSecret: ${{ secrets.CLIENT_SECRET }}
+          subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
+          tenantId: ${{ secrets.TENANT_ID }}
+          operation: 'validateDeploy'
