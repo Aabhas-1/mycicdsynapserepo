@@ -33,12 +33,12 @@ jobs:
 
       # Synapse workspace deployment step using Azure/synapse-workspace-deployment
       - name: Deploy Synapse workspace from workspace_publish branch
-        uses: Azure/synapse-workspace-deployment@V2
+        uses: Azure/synapse-workspace-deployment@V1.9.0
         with:
           TargetWorkspaceName: 'dev--synapseworkspace'
           ArtifactsFolder: './'  # Replace this with the correct folder path
-          TemplateFile: './dev--synapseworkspace/TemplateForWorkspace.json'
-          ParametersFile: './dev--synapseworkspace/TemplateParametersForWorkspace.json'
+          TemplateFile: 'dev--synapseworkspace/TemplateForWorkspace.json'
+          ParametersFile: 'dev--synapseworkspace/TemplateParametersForWorkspace.json'
           environment: 'Azure Public'
           resourceGroup: 'di_msft_offshore_sandbox'
           clientId: ${{ secrets.CLIENT_ID }}
